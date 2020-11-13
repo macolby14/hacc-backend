@@ -70,6 +70,10 @@ export async function schemaStringFromXML(url: string, tableName: string) {
 
   const createTableSql = `CREATE TABLE IF NOT EXISTS public.${newTableName}(
     id INT primary key,
+    firstCheck BOOLEAN,
+    firstChecker TEXT,
+    complete BOOLEAN,
+    helpNeeded BOOLEAN,
     ${dynamicTableSql}
     );`;
 
