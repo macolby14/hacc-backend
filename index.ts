@@ -2,6 +2,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
@@ -28,7 +29,10 @@ async function createExampleTasks() {
 
 const app = express();
 app.use(cors());
-// async... probably should await. Just waiting a little while to call for a task instead
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // support json encoded bodies
+
+// TODO: async... probably should await. Just waiting a little while to call for a task instead
 createExampleTasks();
 
 const PORT = 8000;
@@ -56,6 +60,13 @@ app.get('/createChineseArrivalTable', async (req, res, next: NextFunction) => {
 app.get('/getTask', (req, res) => {
   currTaskInd += 1;
   res.send(exampleTasks[currTaskInd]);
+});
+
+app.post('/completeTask', (req, res) => {
+  const payload = req.body;
+  console.log('Server received payload for compelted task');
+  console.log(payload);
+  res.send('Server received your task');
 });
 
 app.listen(PORT, () => {

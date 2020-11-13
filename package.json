@@ -12,10 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.8",
     "@types/node-fetch": "^2.5.7",
     "@types/pg": "^7.14.6",
     "@types/xml2json": "^0.11.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
