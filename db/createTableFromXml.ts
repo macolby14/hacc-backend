@@ -49,7 +49,7 @@ function convertTypes(xmlType: string): string {
 }
 
 export async function schemaStringFromXML(url: string, tableName: string) {
-  const columns = await readXMLFile(url, 'fs');
+  const columns = await readXMLFile(url, 's3');
   const fields = columns.map((column) => ({
     label: column.label.replace(new RegExp('\\s', 'g'), '_'),
     type: convertTypes(column.type),

@@ -3,17 +3,13 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from 'cors';
 
+import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
 
 // TODO - Pull Tasks dynamically from SharePoint or S3 by reading all the file names in a folder.
 // Read the xml that is that folder.
-type Task = {
-  pdfUrl: string;
-  fieldInfo: string;
-  tableName: string;
-}
 
-const exampleTasks: Task[] = [];
+const exampleTasks: TaskType[] = [];
 let currTaskInd = -1;
 
 async function createExampleTasks() {
@@ -50,7 +46,7 @@ app.get('/createExampleTasks', async (req: Request, res: Response) => {
 
 app.get('/createChineseArrivalTable', async (req, res, next: NextFunction) => {
   try {
-    await createTableFromXml('./public/chineseArrivals_1847-1870-rtp.xml', 'chinese_arrivals');
+    await createTableFromXml('https://hacc-2020.s3-us-west-2.amazonaws.com/chineseArrivals_1847-1870-rtp.xml', 'chinese_arrivals');
   } catch (err) {
     next(err);
   }
