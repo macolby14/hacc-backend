@@ -1,10 +1,21 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export default class Course {
+export default class Task {
     @PrimaryGeneratedColumn()
     id!: number
 
     @Column()
-    date!: string
+    url!: string
+
+    @Column()
+    numPersonsCompleted!: number
+
+    @Column({
+      type: 'jsonb',
+      array: false,
+      default: () => "'[]'",
+      nullable: false,
+    })
+    public users!: Array<{ id: string }>
 }
