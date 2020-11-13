@@ -3,7 +3,8 @@
 import fs from 'fs';
 import parser from 'xml2json';
 import fetch from 'node-fetch';
-import { Pool } from 'pg';
+
+import pool from './pool';
 
 type Column = {
   label: string;
@@ -75,18 +76,7 @@ export async function schemaStringFromXML(url: string, tableName: string) {
   return createTableSql;
 }
 
-// Declare a constant for the Postgres ROLE
-const postgresRole = 'hacc';
-
-const pool = new Pool({
-  user: postgresRole,
-  host: 'localhost',
-  database: 'hacc',
-  password: 'hacc',
-  port: 5432,
-});
-
-export async function createTable(xmlUrl: string, tableName: string) {
+async function createTableFromXml(xmlUrl: string, tableName: string) {
   const createTableSql = await schemaStringFromXML(xmlUrl, tableName);
 
   console.log('\ncreateTableSql:', createTableSql);
@@ -103,3 +93,5 @@ export async function createTable(xmlUrl: string, tableName: string) {
     }
   });
 }
+
+export default createTableFromXml;
