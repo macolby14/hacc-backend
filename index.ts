@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
+import createUserTable from './db/createUserTable';
 
 // TODO - Pull Tasks dynamically from SharePoint or S3 by reading all the file names in a folder.
 // Read the xml that is that folder.
@@ -56,6 +57,12 @@ app.get('/createExampleTable', async (req, res, next: NextFunction) => {
     next(err);
   }
   res.send('Table Created');
+});
+
+app.get('/createUserTable', async (req, res, next) => {
+  createUserTable().then((result) => {
+    res.send(result);
+  }).catch((err) => next(err));
 });
 
 app.get('/task', (req, res) => {
