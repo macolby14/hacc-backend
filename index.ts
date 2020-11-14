@@ -58,12 +58,12 @@ app.get('/createExampleTable', async (req, res, next: NextFunction) => {
   res.send('Table Created');
 });
 
-app.get('/getTask', (req, res) => {
+app.get('/task', (req, res) => {
   currTaskInd += 1;
   res.send(exampleTasks[currTaskInd]);
 });
 
-app.post('/completeTask', (request, response) => {
+app.post('/task', (request, response) => {
   const payload = request.body as PayloadType;
   console.log('Server received payload for compelted task');
   console.log(payload);
