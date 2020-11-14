@@ -60,26 +60,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-console */
 var express_1 = __importDefault(require("express"));
+// import path from 'path';
 var cors_1 = __importDefault(require("cors"));
 var body_parser_1 = __importDefault(require("body-parser"));
 require("reflect-metadata");
 var passport_1 = __importDefault(require("passport"));
-// import passportLocal from 'passport-local';
-// import session from 'express-session';
+require("./config/env-setup");
+require("./config/passport-setup");
 var cookie_session_1 = __importDefault(require("cookie-session"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 var keys_1 = __importDefault(require("./config/keys"));
-// import UserAccount from './entity/UserAccount';
 var updateTableAfterTask_1 = __importDefault(require("./db/updateTableAfterTask"));
 var createTableFromXml_1 = __importStar(require("./db/createTableFromXml"));
 var user_1 = require("./db/user");
-require('./config/passport-setup');
-require('./config/env-setup');
-// const LocalStrategy = passportLocal.Strategy;
 // TODO - Pull Tasks dynamically from SharePoint or S3 by reading all the file names in a folder.
 // Read the xml that is that folder.
-// const userRepository = connection.getRepository(UserAccount);
 var exampleTasks = [];
 var currTaskInd = -1;
 function createExampleTasks() {

@@ -5,28 +5,21 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import 'reflect-metadata';
 import passport from 'passport';
-// import passportLocal from 'passport-local';
-// import session from 'express-session';
+
+import './config/env-setup';
+import './config/passport-setup';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
 import UserAccount from './entity/UserAccount';
 import authRoutes from './routes/authRoutes';
 import keys from './config/keys';
-// import UserAccount from './entity/UserAccount';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
 import { addPointsToUserScore, getUsersByScore } from './db/user';
 
-require('./config/passport-setup');
-require('./config/env-setup');
-
-// const LocalStrategy = passportLocal.Strategy;
-
 // TODO - Pull Tasks dynamically from SharePoint or S3 by reading all the file names in a folder.
 // Read the xml that is that folder.
-
-// const userRepository = connection.getRepository(UserAccount);
 
 const exampleTasks: TaskType[] = [];
 let currTaskInd = -1;
