@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,32 +7,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 let UserAccount = class UserAccount {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], UserAccount.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    Column(),
     __metadata("design:type", String)
 ], UserAccount.prototype, "googleId", void 0);
 __decorate([
-    typeorm_1.Column(),
+    Column(),
     __metadata("design:type", String)
 ], UserAccount.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column(),
+    Column(),
     __metadata("design:type", String)
 ], UserAccount.prototype, "permissions", void 0);
 __decorate([
-    typeorm_1.Column(),
+    Column(),
     __metadata("design:type", Number)
 ], UserAccount.prototype, "score", void 0);
 UserAccount = __decorate([
-    typeorm_1.Entity()
+    Entity()
 ], UserAccount);
-exports.default = UserAccount;
+export default UserAccount;
 //# sourceMappingURL=UserAccount.js.map

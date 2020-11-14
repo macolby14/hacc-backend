@@ -1,11 +1,6 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const passport_1 = __importDefault(require("passport"));
-const router = express_1.default.Router();
+import express from 'express';
+import passport from 'passport';
+const router = express.Router();
 const CLIENT_HOME_PAGE_URL = `${process.env.CLIENT}:${process.env.CLIENT_PORT}`;
 // when login is successful, retrieve user info
 router.get('/login/success', (req, res) => {
@@ -31,11 +26,11 @@ router.get('/logout', (req, res) => {
     res.redirect(CLIENT_HOME_PAGE_URL);
 });
 // auth with google
-router.get('/google', passport_1.default.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
 // redirect to home page after successfully login via google
-router.get('/google/callback', passport_1.default.authenticate('google', {
+router.get('/google/callback', passport.authenticate('google', {
     successRedirect: CLIENT_HOME_PAGE_URL,
     failureRedirect: '/auth/login/failed',
 }));
-exports.default = router;
+export default router;
 //# sourceMappingURL=authRoutes.js.map

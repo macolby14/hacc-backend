@@ -1,30 +1,35 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsersByScore = exports.addPointsToUserScore = void 0;
 /* eslint-disable import/prefer-default-export */
-const typeorm_1 = require("typeorm");
-const UserAccount_1 = __importDefault(require("../entity/UserAccount"));
+import { getConnection } from 'typeorm';
+import UserAccount from '../entity/UserAccount';
 // TODO: Could this call too early? Do we need to verify first connection was verified
-async function addPointsToUserScore(user, pointsToAdd) {
-    const connection = typeorm_1.getConnection();
-    const userRepository = connection.getRepository(UserAccount_1.default);
-    const foundUser = await userRepository.findOne({ id: user.id });
-    if (!foundUser) {
-        throw new Error('error in addPointsToUserScore');
-    }
-    foundUser.score += pointsToAdd;
-    await userRepository.save(foundUser);
+export function addPointsToUserScore(user, pointsToAdd) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connection = getConnection();
+        const userRepository = connection.getRepository(UserAccount);
+        const foundUser = yield userRepository.findOne({ id: user.id });
+        if (!foundUser) {
+            throw new Error('error in addPointsToUserScore');
+        }
+        foundUser.score += pointsToAdd;
+        yield userRepository.save(foundUser);
+    });
 }
-exports.addPointsToUserScore = addPointsToUserScore;
-async function getUsersByScore() {
-    const connection = typeorm_1.getConnection();
-    const userRepository = connection.getRepository(UserAccount_1.default);
-    const users = await userRepository.find();
-    users.sort((a, b) => b.score - a.score);
-    return users;
+export function getUsersByScore() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connection = getConnection();
+        const userRepository = connection.getRepository(UserAccount);
+        const users = yield userRepository.find();
+        users.sort((a, b) => b.score - a.score);
+        return users;
+    });
 }
-exports.getUsersByScore = getUsersByScore;
 //# sourceMappingURL=user.js.map

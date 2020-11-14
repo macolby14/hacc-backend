@@ -1,16 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.urlToFileName = exports.convertValueStrFormat = exports.convertLabelToDbFormat = void 0;
 /* eslint-disable import/prefer-default-export */
-function convertLabelToDbFormat(label) {
+export function convertLabelToDbFormat(label) {
     return label.replace(new RegExp('\\s', 'g'), '_').toLowerCase();
 }
-exports.convertLabelToDbFormat = convertLabelToDbFormat;
-function convertValueStrFormat(label) {
+export function convertValueStrFormat(label) {
     return `'${label}'`;
 }
-exports.convertValueStrFormat = convertValueStrFormat;
-function urlToFileName(url) {
+export function urlToFileName(url) {
     // regex to just match last part of filename
     const re = /\/\/.+\/(.+)?\.pdf/;
     const match = url.match(re);
@@ -20,5 +15,4 @@ function urlToFileName(url) {
     const fileName = match[1];
     return fileName;
 }
-exports.urlToFileName = urlToFileName;
 //# sourceMappingURL=utils.js.map
