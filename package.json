@@ -14,6 +14,7 @@
   "dependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.8",
+    "@types/express-session": "^1.17.2",
     "@types/node-fetch": "^2.5.7",
     "@types/passport": "^1.0.4",
     "@types/passport-local": "^1.0.33",
@@ -22,6 +23,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
