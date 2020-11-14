@@ -4,6 +4,7 @@ import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
+import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
 
@@ -48,7 +49,7 @@ app.get('/createExampleTasks', async (req: Request, res: Response) => {
   res.send(exampleTasks);
 });
 
-app.get('/createChineseArrivalTable', async (req, res, next: NextFunction) => {
+app.get('/createExampleTable', async (req, res, next: NextFunction) => {
   try {
     await createTableFromXml('https://hacc-2020.s3-us-west-2.amazonaws.com/chineseArrivals_1847-1870-rtp.xml', 'chinese_arrivals');
   } catch (err) {
@@ -62,11 +63,16 @@ app.get('/getTask', (req, res) => {
   res.send(exampleTasks[currTaskInd]);
 });
 
-app.post('/completeTask', (req, res) => {
-  const payload = req.body;
+app.post('/completeTask', (request, response) => {
+  const payload = request.body as PayloadType;
   console.log('Server received payload for compelted task');
   console.log(payload);
-  res.send('Server received your task');
+  updateTableAfterTask(payload).then(() => {
+    response.send('success');
+  }).catch((err) => {
+    response.send('error');
+    console.log('error in complete task', err);
+  });
 });
 
 app.listen(PORT, () => {

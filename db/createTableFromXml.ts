@@ -5,6 +5,7 @@ import parser from 'xml2json';
 import fetch from 'node-fetch';
 
 import pool from './pool';
+import { convertLabelToDbFormat } from './utils';
 
 type Column = {
   label: string;
@@ -51,13 +52,13 @@ function convertTypes(xmlType: string): string {
 export async function schemaStringFromXML(url: string, tableName: string) {
   const columns = await readXMLFile(url, 's3');
   const fields = columns.map((column) => ({
-    label: column.label.replace(new RegExp('\\s', 'g'), '_'),
+    label: convertLabelToDbFormat(column.label),
     type: convertTypes(column.type),
   }));
 
   const dynamicTableSql = fields.reduce((prev, curr) => {
     let newStr = prev;
-    const newAddition = `${curr.label.toLowerCase()} ${curr.type}`;
+    const newAddition = `${curr.label} ${curr.type}`;
     if (prev !== '') {
       newStr = `${newAddition},${prev}`;
     } else {
@@ -68,12 +69,10 @@ export async function schemaStringFromXML(url: string, tableName: string) {
 
   const newTableName = tableName.replace(new RegExp('-', 'g'), '_');
 
+  const commonFields = 'file_name TEXT primary key,';
+
   const createTableSql = `CREATE TABLE IF NOT EXISTS public.${newTableName}(
-    id INT primary key,
-    firstCheck BOOLEAN,
-    firstChecker TEXT,
-    complete BOOLEAN,
-    helpNeeded BOOLEAN,
+    ${commonFields}
     ${dynamicTableSql}
     );`;
 
