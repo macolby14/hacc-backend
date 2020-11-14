@@ -5,10 +5,10 @@ const postgresRole = 'hacc';
 
 const pool = new Pool({
   user: postgresRole,
-  host: 'localhost',
-  database: 'hacc',
-  password: 'hacc',
-  port: 5432,
+  host: process.env.TYPEORM_HOST,
+  database: process.env.TYPEORM_USERNAME,
+  password: (process.env.TYPEORM_PASSWORD as string),
+  port: parseInt(process.env.TYPEORM_PORT as string, 10),
 });
 
 export default pool;

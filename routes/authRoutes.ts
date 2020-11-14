@@ -3,7 +3,7 @@ import passport from 'passport';
 
 const router = express.Router();
 
-const CLIENT_HOME_PAGE_URL = process.env.CLIENT as string;
+const CLIENT_HOME_PAGE_URL = `${process.env.CLIENT}:${process.env.CLIENT_PORT}` as string;
 
 // when login is successful, retrieve user info
 router.get('/login/success', (req, res) => {
