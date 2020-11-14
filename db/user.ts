@@ -15,3 +15,13 @@ export async function addPointsToUserScore(user: UserAccount, pointsToAdd: numbe
   foundUser.score += pointsToAdd;
   await userRepository.save(foundUser);
 }
+
+export async function getUsersByScore(): Promise<UserAccount[]> {
+  const connection = getConnection();
+  const userRepository = connection.getRepository(UserAccount);
+  const users = await userRepository.find();
+
+  users.sort((a, b) => b.score - a.score);
+
+  return users;
+}

@@ -19,7 +19,7 @@ import keys from './config/keys';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
-import { addPointsToUserScore } from './db/user';
+import { addPointsToUserScore, getUsersByScore } from './db/user';
 
 // const LocalStrategy = passportLocal.Strategy;
 
@@ -150,6 +150,15 @@ app.post('/task', authCheck, async (request, response) => {
   } catch (err) {
     console.log('error in complete task', err);
     response.status(400).send('error');
+  }
+});
+
+app.get('/users', async (request, response) => {
+  try {
+    const users = await getUsersByScore();
+    response.status(200).json(users);
+  } catch (err) {
+    response.status(400).send('Something went wrong in /users route');
   }
 });
 
