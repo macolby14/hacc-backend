@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import express, { Request, Response, NextFunction } from 'express';
-import path from 'path';
+// import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import 'reflect-metadata';
