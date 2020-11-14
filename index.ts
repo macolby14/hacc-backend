@@ -44,7 +44,11 @@ async function createExampleTasks() {
 }
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // allow to server to accept request from different origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // allow session cookie from browser to pass through
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cookieSession({
@@ -126,12 +130,12 @@ app.get('/createExampleTable', async (req, res, next: NextFunction) => {
   res.send('Table Created');
 });
 
-app.get('/task', (req, res) => {
+app.get('/task', authCheck, (req, res) => {
   currTaskInd += 1;
   res.send(exampleTasks[currTaskInd]);
 });
 
-app.post('/task', (request, response) => {
+app.post('/task', authCheck, (request, response) => {
   const payload = request.body as PayloadType;
   console.log('Server received payload for compelted task');
   console.log(payload);
