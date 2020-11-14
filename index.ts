@@ -47,7 +47,7 @@ async function createExampleTasks() {
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000', // allow to server to accept request from different origin
+  origin: `${process.env.CLIENT}:${process.env.CLIENT_PORT}`, // allow to server to accept request from different origin
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // allow session cookie from browser to pass through
 }));
@@ -163,5 +163,5 @@ app.get('/users', async (request, response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+  console.log(`⚡️[server]: Server is running at ${process.env.HOST}:${PORT}`);
 });
