@@ -43,7 +43,7 @@ export async function readXMLFile(url: string, type: readOptions): Promise<Colum
 function convertTypes(xmlType: string): string {
   switch (xmlType) {
     case 'string': return 'TEXT';
-    case 'date': return 'DATE';
+    case 'date': return 'TEXT';
     case 'number': return 'INTEGER';
     default: throw new Error('xml type not found');
   }

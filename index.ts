@@ -11,6 +11,7 @@ import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
 
 import './config/env-setup';
+import UserAccount from './entity/UserAccount';
 import authRoutes from './routes/authRoutes';
 import './config/passport-setup';
 import keys from './config/keys';
@@ -18,6 +19,7 @@ import keys from './config/keys';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
+import { addPointsToUserScore } from './db/user';
 
 // const LocalStrategy = passportLocal.Strategy;
 
@@ -135,16 +137,20 @@ app.get('/task', authCheck, (req, res) => {
   res.send(exampleTasks[currTaskInd]);
 });
 
-app.post('/task', authCheck, (request, response) => {
+app.post('/task', authCheck, async (request, response) => {
   const payload = request.body as PayloadType;
-  console.log('Server received payload for compelted task');
-  console.log(payload);
-  updateTableAfterTask(payload).then(() => {
-    response.send('success');
-  }).catch((err) => {
-    response.send('error');
+
+  try {
+    await updateTableAfterTask(payload);
+    if (request.user === undefined) { throw new Error('User undefined after auth check'); }
+    console.log('User');
+    console.log(request.user);
+    await addPointsToUserScore((request.user as UserAccount), 100);
+    response.status(200).send('success');
+  } catch (err) {
     console.log('error in complete task', err);
-  });
+    response.status(400).send('error');
+  }
 });
 
 app.listen(PORT, () => {
