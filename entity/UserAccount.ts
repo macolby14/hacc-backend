@@ -6,10 +6,10 @@ export default class UserAccount {
     id!: number
 
     @Column()
-    email!: string
+    googleId!: string
 
     @Column()
-    password!: string
+    name!: string
 
     @Column()
     permissions!: string

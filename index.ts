@@ -6,21 +6,26 @@ import bodyParser from 'body-parser';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import passport from 'passport';
-import passportLocal from 'passport-local';
-import session from 'express-session';
+// import passportLocal from 'passport-local';
+// import session from 'express-session';
+import cookieSession from 'cookie-session';
+import cookieParser from 'cookie-parser';
 
-import UserAccount from './entity/UserAccount';
+import authRoutes from './routes/authRoutes';
+import './config/passport-setup';
+import keys from './config/keys';
+// import UserAccount from './entity/UserAccount';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
 
-const LocalStrategy = passportLocal.Strategy;
+// const LocalStrategy = passportLocal.Strategy;
 
 // TODO - Pull Tasks dynamically from SharePoint or S3 by reading all the file names in a folder.
 // Read the xml that is that folder.
 
-createConnection().then((connection) => {
-  const userRepository = connection.getRepository(UserAccount);
+createConnection().then(() => {
+  // const userRepository = connection.getRepository(UserAccount);
 
   const exampleTasks: TaskType[] = [];
   let currTaskInd = -1;
@@ -42,10 +47,18 @@ createConnection().then((connection) => {
   const app = express();
   app.use(cors());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(session({ secret: 'hacc' }));
+  app.use(
+    cookieSession({
+      name: 'session',
+      keys: [keys.COOKIE_KEY],
+      maxAge: 24 * 60 * 60 * 100,
+    }),
+  );
+  app.use(cookieParser());
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(bodyParser.json()); // support json encoded bodies
+  app.use('/auth', authRoutes);
 
   // TODO: async... probably should await. Just waiting a little while to call for a task instead
   createExampleTasks();
@@ -55,24 +68,24 @@ createConnection().then((connection) => {
   // Serve static files from public -> served under static url
   app.use('/static', express.static(path.join(__dirname, 'public')));
 
-  // from passport documentation
-  passport.use(new LocalStrategy(
-    {
-      usernameField: 'email',
-    },
-    async (email, password, done) => {
-      try {
-        const user = await userRepository.findOne({ email, password });
-        if (!user) {
-          console.log('User not found');
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        return done(null, user);
-      } catch (err) {
-        return done(err);
-      }
-    },
-  ));
+  // // from passport documentation
+  // passport.use(new LocalStrategy(
+  //   {
+  //     usernameField: 'email',
+  //   },
+  //   async (email, password, done) => {
+  //     try {
+  //       const user = await userRepository.findOne({ email, password });
+  //       if (!user) {
+  //         console.log('User not found');
+  //         return done(null, false, { message: 'Incorrect username.' });
+  //       }
+  //       return done(null, user);
+  //     } catch (err) {
+  //       return done(err);
+  //     }
+  //   },
+  // ));
 
   app.post('/login',
     passport.authenticate('local', {
