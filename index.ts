@@ -9,17 +9,17 @@ import passport from 'passport';
 // import session from 'express-session';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
-
-import './config/env-setup';
 import UserAccount from './entity/UserAccount';
 import authRoutes from './routes/authRoutes';
-import './config/passport-setup';
 import keys from './config/keys';
 // import UserAccount from './entity/UserAccount';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
 import { addPointsToUserScore, getUsersByScore } from './db/user';
+
+require('./config/passport-setup');
+require('./config/env-setup');
 
 // const LocalStrategy = passportLocal.Strategy;
 

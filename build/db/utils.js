@@ -7,17 +7,17 @@ function convertLabelToDbFormat(label) {
 }
 exports.convertLabelToDbFormat = convertLabelToDbFormat;
 function convertValueStrFormat(label) {
-    return `'${label}'`;
+    return "'" + label + "'";
 }
 exports.convertValueStrFormat = convertValueStrFormat;
 function urlToFileName(url) {
     // regex to just match last part of filename
-    const re = /\/\/.+\/(.+)?\.pdf/;
-    const match = url.match(re);
+    var re = /\/\/.+\/(.+)?\.pdf/;
+    var match = url.match(re);
     if (match === null || match.length < 1) {
         throw new Error('filename invalid');
     }
-    const fileName = match[1];
+    var fileName = match[1];
     return fileName;
 }
 exports.urlToFileName = urlToFileName;

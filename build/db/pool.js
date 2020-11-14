@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pg_1 = require("pg");
+var pg_1 = require("pg");
 // Declare a constant for the Postgres ROLE
-const postgresRole = 'hacc';
-const pool = new pg_1.Pool({
+var postgresRole = 'hacc';
+var pool = new pg_1.Pool({
     user: postgresRole,
     host: process.env.TYPEORM_HOST,
     database: process.env.TYPEORM_USERNAME,

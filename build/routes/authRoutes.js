@@ -3,12 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const passport_1 = __importDefault(require("passport"));
-const router = express_1.default.Router();
-const CLIENT_HOME_PAGE_URL = `${process.env.CLIENT}:${process.env.CLIENT_PORT}`;
+var express_1 = __importDefault(require("express"));
+var passport_1 = __importDefault(require("passport"));
+var router = express_1.default.Router();
+var CLIENT_HOME_PAGE_URL = process.env.CLIENT + ":" + process.env.CLIENT_PORT;
 // when login is successful, retrieve user info
-router.get('/login/success', (req, res) => {
+router.get('/login/success', function (req, res) {
     if (req.user) {
         res.json({
             success: true,
@@ -19,14 +19,14 @@ router.get('/login/success', (req, res) => {
     }
 });
 // when login failed, send failed msg
-router.get('/login/failed', (req, res) => {
+router.get('/login/failed', function (req, res) {
     res.status(401).json({
         success: false,
         message: 'user failed to authenticate.',
     });
 });
 // When logout, redirect to client
-router.get('/logout', (req, res) => {
+router.get('/logout', function (req, res) {
     req.logout();
     res.redirect(CLIENT_HOME_PAGE_URL);
 });

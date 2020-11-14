@@ -9,31 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
-let UserAccount = class UserAccount {
-};
-__decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
-    __metadata("design:type", Number)
-], UserAccount.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], UserAccount.prototype, "googleId", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], UserAccount.prototype, "name", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], UserAccount.prototype, "permissions", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", Number)
-], UserAccount.prototype, "score", void 0);
-UserAccount = __decorate([
-    typeorm_1.Entity()
-], UserAccount);
+var typeorm_1 = require("typeorm");
+var UserAccount = /** @class */ (function () {
+    function UserAccount() {
+    }
+    __decorate([
+        typeorm_1.PrimaryGeneratedColumn(),
+        __metadata("design:type", Number)
+    ], UserAccount.prototype, "id", void 0);
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], UserAccount.prototype, "googleId", void 0);
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], UserAccount.prototype, "name", void 0);
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], UserAccount.prototype, "permissions", void 0);
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", Number)
+    ], UserAccount.prototype, "score", void 0);
+    UserAccount = __decorate([
+        typeorm_1.Entity()
+    ], UserAccount);
+    return UserAccount;
+}());
 exports.default = UserAccount;
 //# sourceMappingURL=UserAccount.js.map
