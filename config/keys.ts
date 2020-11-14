@@ -1,21 +1,15 @@
 // ADD YOUR OWN KEYS AND RENAME THIS FILE TO keys.js
-const TWITTER_TOKENS = {
-  GOOGLE_CLIENT_ID: 'SOME KEY',
-  GOOGLE_CLIENT_SECRET: 'SOME SECRET',
+const GOOGLE_TOKENS = {
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 };
 
-// const DB_USER = 'hacc';
-// const DB_PASSWORD = 'hacc';
-// const MONGODB = {
-//   MONGODB_URI: `mongodb://${DB_USER}:${DB_PASSWORD}@ds<SOME_DOMAIN>.mlab.com:<PORT>/<PROJECT_NAME>`,
-// };
-
 const SESSION = {
-  COOKIE_KEY: 'hacc_cookie_key',
+  COOKIE_KEY: process.env.COOKIE_KEY,
 };
 
 const KEYS = {
-  ...TWITTER_TOKENS,
+  ...GOOGLE_TOKENS,
   ...SESSION,
 };
 

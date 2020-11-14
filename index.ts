@@ -11,6 +11,7 @@ import passport from 'passport';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
 
+import './config/env-setup';
 import authRoutes from './routes/authRoutes';
 import './config/passport-setup';
 import keys from './config/keys';
