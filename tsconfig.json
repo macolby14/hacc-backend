@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES6",
+        "target": "ES2015",
         "module": "ES2015",
         "rootDir": "./",
         "outDir": "./build",
@@ -14,6 +14,8 @@
             "*": ["node_modules/*"]
         },
         "emitDecoratorMetadata": true,
-        "experimentalDecorators": true
-    }
+        "experimentalDecorators": true,
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules"]
 }

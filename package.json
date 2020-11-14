@@ -2,11 +2,11 @@
   "name": "hacc-fire-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node build/index.js",
+    "start": "node --experimental-modules build/index.js",
     "dev": "nodemon index.ts",
     "build": "tsc --project ./"
   },
