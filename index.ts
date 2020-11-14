@@ -71,7 +71,8 @@ createExampleTasks();
 const PORT = 8000;
 
 // Serve static files from public -> served under static url
-app.use('/static', express.static(path.join(__dirname, 'public')));
+// Commented out for AWS EBS
+// app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // // from passport documentation
 // passport.use(new LocalStrategy(
