@@ -1,57 +1,57 @@
 /* eslint-disable no-underscore-dangle */
-import { getConnection } from 'typeorm';
+import { createConnection } from 'typeorm';
 
 import passport from 'passport';
 import PassportGoogle from 'passport-google-oauth';
 import UserAccount from '../entity/UserAccount';
 import keys from './keys';
 
-const userRepository = getConnection().getRepository(UserAccount);
+createConnection().then((connection) => {
+  const userRepository = connection.getRepository(UserAccount);
 
-const GoogleStrategy = PassportGoogle.OAuth2Strategy;
+  const GoogleStrategy = PassportGoogle.OAuth2Strategy;
 
-passport.use(
-  new GoogleStrategy(
-    {
+  passport.use(
+    new GoogleStrategy(
+      {
       // options for the twitter start
-      clientID: keys.GOOGLE_CLIENT_ID,
-      clientSecret: keys.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://www.example.com/auth/google/callback',
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      const currentUser = await userRepository.findOne({
-        googleId: profile.id,
-      });
+        clientID: keys.GOOGLE_CLIENT_ID,
+        clientSecret: keys.GOOGLE_CLIENT_SECRET,
+        callbackURL: 'http://www.example.com/auth/google/callback',
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        const currentUser = await userRepository.findOne({
+          googleId: profile.id,
+        });
         // create new user if the database doesn't have this user
-      if (!currentUser) {
-        const newUser = await new UserAccount();
-        newUser.name = profile._json.name;
-        newUser.googleId = profile.id;
-        newUser.permissions = 'basic';
-        newUser.score = 0;
+        if (!currentUser) {
+          const newUser = await new UserAccount();
+          newUser.name = profile._json.name;
+          newUser.googleId = profile.id;
+          newUser.permissions = 'basic';
+          newUser.score = 0;
 
-        await userRepository.save(newUser);
+          await userRepository.save(newUser);
 
-        if (newUser) {
-          done(null, newUser);
+          if (newUser) {
+            done(null, newUser);
+          }
         }
-      }
-      done(null, currentUser);
-    },
-  ),
-);
+        done(null, currentUser);
+      },
+    ),
+  );
 
-passport.serializeUser((user, done) => {
-  done(null, (user as UserAccount).id);
-});
+  passport.serializeUser((user, done) => {
+    done(null, (user as UserAccount).id);
+  });
 
-passport.deserializeUser((id, done) => {
-  const typedId = id as number;
-  userRepository.findOne({ id: typedId }).then((user) => {
-    done(null, user);
-  }).catch((err) => {
-    done(new Error(`Failed to deserialize user ${err}`));
+  passport.deserializeUser((id, done) => {
+    const typedId = id as number;
+    userRepository.findOne({ id: typedId }).then((user) => {
+      done(null, user);
+    }).catch((err) => {
+      done(new Error(`Failed to deserialize user ${err}`));
+    });
   });
 });
-
-export default null;
