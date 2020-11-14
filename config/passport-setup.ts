@@ -17,7 +17,7 @@ createConnection().then((connection) => {
       // options for the twitter start
         clientID: keys.GOOGLE_CLIENT_ID,
         clientSecret: keys.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://www.example.com/auth/google/callback',
+        callbackURL: 'http://localhost:8000/auth/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         const currentUser = await userRepository.findOne({

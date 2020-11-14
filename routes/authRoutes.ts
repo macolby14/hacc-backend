@@ -31,13 +31,13 @@ router.get('/logout', (req, res) => {
   res.redirect(CLIENT_HOME_PAGE_URL);
 });
 
-// auth with twitter
-router.get('/twitter', passport.authenticate('twitter'));
+// auth with google
+router.get('/google', passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
 
-// redirect to home page after successfully login via twitter
+// redirect to home page after successfully login via google
 router.get(
-  '/twitter/redirect',
-  passport.authenticate('twitter', {
+  '/google/callback',
+  passport.authenticate('google', {
     successRedirect: CLIENT_HOME_PAGE_URL,
     failureRedirect: '/auth/login/failed',
   }),

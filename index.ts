@@ -86,12 +86,28 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 //   },
 // ));
 
-app.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true,
-  }));
+const authCheck = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.user) {
+    res.status(401).json({
+      authenticated: false,
+      message: 'user has not been authenticated',
+    });
+  } else {
+    next();
+  }
+};
+
+// if it's already login, send the profile response,
+// otherwise, send a 401 response that the user is not authenticated
+// authCheck before navigating to home page
+app.get('/restricted', authCheck, (req, res) => {
+  res.status(200).json({
+    authenticated: true,
+    message: 'user successfully authenticated',
+    user: req.user,
+    cookies: req.cookies,
+  });
+});
 
 app.get('/', (req: Request, res: Response) => res.send('Test'));
 
