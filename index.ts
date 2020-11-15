@@ -61,8 +61,6 @@ app.use('/auth', authRoutes);
 // TODO: async... probably should await. Just waiting a little while to call for a task instead
 createExampleTasks();
 
-const PORT = 8000;
-
 // Serve static files from public -> served under static url
 // Commented out for AWS EBS
 // app.use('/static', express.static(path.join(__dirname, 'public')));
@@ -156,6 +154,6 @@ app.get('/users', async (request, response) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at ${process.env.HOST}:${PORT}`);
+app.listen(process.env.HOST_PORT, () => {
+  console.log(`⚡️[server]: Server is running at ${process.env.HOST}:${process.env.HOST_PORT}`);
 });
