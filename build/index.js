@@ -121,7 +121,6 @@ app.use(body_parser_1.default.json()); // support json encoded bodies
 app.use('/auth', authRoutes_1.default);
 // TODO: async... probably should await. Just waiting a little while to call for a task instead
 createExampleTasks();
-var PORT = 8000;
 // Serve static files from public -> served under static url
 // Commented out for AWS EBS
 // app.use('/static', express.static(path.join(__dirname, 'public')));
@@ -248,7 +247,7 @@ app.get('/users', function (request, response) { return __awaiter(void 0, void 0
         }
     });
 }); });
-app.listen(PORT, function () {
-    console.log("\u26A1\uFE0F[server]: Server is running at " + process.env.HOST + ":" + PORT);
+app.listen(process.env.HOST_PORT, function () {
+    console.log("\u26A1\uFE0F[server]: Server is running at " + process.env.HOST + ":" + process.env.HOST_PORT);
 });
 //# sourceMappingURL=index.js.map
