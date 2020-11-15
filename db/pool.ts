@@ -1,14 +1,11 @@
 import { Pool } from 'pg';
 
-// Declare a constant for the Postgres ROLE
-const postgresRole = 'hacc';
-
 const pool = new Pool({
-  user: postgresRole,
-  host: process.env.TYPEORM_HOST,
-  database: process.env.TYPEORM_USERNAME,
-  password: (process.env.TYPEORM_PASSWORD as string),
-  port: parseInt(process.env.TYPEORM_PORT as string, 10),
+  user: process.env.RDS_USERNAME,
+  host: process.env.RDS_HOSTNAME,
+  database: process.env.RDS_DB_NAME,
+  password: (process.env.RDS_PASSWORD as string),
+  port: parseInt(process.env.RDS_PORT as string, 10),
 });
 
 export default pool;

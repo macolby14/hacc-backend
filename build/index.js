@@ -249,5 +249,6 @@ app.get('/users', function (request, response) { return __awaiter(void 0, void 0
 }); });
 app.listen(process.env.HOST_PORT, function () {
     console.log("\u26A1\uFE0F[server]: Server is running at " + process.env.HOST + ":" + process.env.HOST_PORT);
+    console.log("Google Auth Host/Port " + process.env.HOST + ":" + process.env.HOST_PORT);
 });
 //# sourceMappingURL=index.js.map

@@ -156,4 +156,5 @@ app.get('/users', async (request, response) => {
 
 app.listen(process.env.HOST_PORT, () => {
   console.log(`⚡️[server]: Server is running at ${process.env.HOST}:${process.env.HOST_PORT}`);
+  console.log(`Google Auth Host/Port ${process.env.HOST}:${process.env.HOST_PORT}`);
 });
