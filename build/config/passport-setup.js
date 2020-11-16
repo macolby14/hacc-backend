@@ -48,11 +48,12 @@ var keys_1 = __importDefault(require("./keys"));
 typeorm_1.createConnection().then(function (connection) {
     var userRepository = connection.getRepository(UserAccount_1.default);
     var GoogleStrategy = passport_google_oauth_1.default.OAuth2Strategy;
+    var callbackURLDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : process.env.HOST + ":" + process.env.HOST_PORT;
     passport_1.default.use(new GoogleStrategy({
         // options for the twitter start
         clientID: keys_1.default.GOOGLE_CLIENT_ID,
         clientSecret: keys_1.default.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.HOST + ":" + process.env.HOST_PORT + "/auth/google/callback",
+        callbackURL: callbackURLDomain + "/auth/google/callback",
     }, function (accessToken, refreshToken, profile, done) { return __awaiter(void 0, void 0, void 0, function () {
         var currentUser, newUser;
         return __generator(this, function (_a) {
