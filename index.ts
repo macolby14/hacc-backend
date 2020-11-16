@@ -63,29 +63,6 @@ app.use('/auth', authRoutes);
 // TODO: async... probably should await. Just waiting a little while to call for a task instead
 createExampleTasks();
 
-// Serve static files from public -> served under static url
-// Commented out for AWS EBS
-// app.use('/static', express.static(path.join(__dirname, 'public')));
-
-// // from passport documentation
-// passport.use(new LocalStrategy(
-//   {
-//     usernameField: 'email',
-//   },
-//   async (email, password, done) => {
-//     try {
-//       const user = await userRepository.findOne({ email, password });
-//       if (!user) {
-//         console.log('User not found');
-//         return done(null, false, { message: 'Incorrect username.' });
-//       }
-//       return done(null, user);
-//     } catch (err) {
-//       return done(err);
-//     }
-//   },
-// ));
-
 const authCheck = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
     res.status(401).json({
