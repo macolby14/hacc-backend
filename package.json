@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node build/index.js",
     "dev": "NODE_ENV=development nodemon index.ts",
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json",
+    "go": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",

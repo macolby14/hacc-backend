@@ -134,12 +134,12 @@ app.get('/users', async (request, response) => {
 });
 
 // Listen both http & https ports
-const httpsServer = https.createServer({
-  key: fs.readFileSync('./certs/server-hacc-key.pem'),
-  cert: fs.readFileSync('./certs/server-hacc-cert.pem'),
-}, app);
+// const httpsServer = https.createServer({
+//   key: fs.readFileSync('./certs/server-hacc-key.pem'),
+//   cert: fs.readFileSync('./certs/server-hacc-cert.pem'),
+// }, app);
 
-httpsServer.listen(process.env.HOST_PORT, () => {
+app.listen(process.env.HOST_PORT, () => {
   console.log(`⚡️[server]: Server is running at ${process.env.HOST}:${process.env.HOST_PORT}`);
   console.log(`Google Auth Host/Port ${process.env.HOST}:${process.env.HOST_PORT}`);
 });
