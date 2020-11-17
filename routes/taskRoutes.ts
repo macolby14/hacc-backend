@@ -37,12 +37,12 @@ router.get('/createExampleTable', async (req, res, next: NextFunction) => {
   res.send('Table Created');
 });
 
-router.get('/task', authCheck, (req, res) => {
+router.get('/', authCheck, (req, res) => {
   currTaskInd += 1;
   res.send(exampleTasks[currTaskInd]);
 });
 
-router.post('/task', authCheck, async (request, response) => {
+router.post('/', authCheck, async (request, response) => {
   const payload = request.body as PayloadType;
 
   try {

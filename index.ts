@@ -8,9 +8,9 @@ import passport from 'passport';
 import './config/env-setup';
 import './config/passport-setup';
 import session from 'express-session';
+import taskRoutes, { createExampleTasks } from './routes/taskRoutes';
 import authRoutes from './routes/authRoutes';
 import { getUsersByScore } from './db/user';
-import { createExampleTasks } from './routes/taskRoutes';
 
 const app = express();
 app.use(cors({
@@ -35,6 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use('/auth', authRoutes);
+app.use('/task', taskRoutes);
 
 // TODO replace this with getting tasks from S3. Also need this async
 createExampleTasks();
