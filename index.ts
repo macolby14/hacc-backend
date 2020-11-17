@@ -1,20 +1,15 @@
 /* eslint-disable no-console */
 import express, { Request, Response, NextFunction } from 'express';
-// import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import 'reflect-metadata';
 import passport from 'passport';
-// import https from 'https';
-// import fs from 'fs';
 
 import './config/env-setup';
 import './config/passport-setup';
-import cookieSession from 'cookie-session';
-import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import UserAccount from './entity/UserAccount';
 import authRoutes from './routes/authRoutes';
-import keys from './config/keys';
 import updateTableAfterTask, { PayloadType } from './db/updateTableAfterTask';
 import { TaskType } from './shared/shared-types';
 import createTableFromXml, { readXMLFile } from './db/createTableFromXml';
@@ -47,20 +42,24 @@ app.use(cors({
   credentials: true, // allow session cookie from browser to pass through
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cookieSession({
-    name: 'session',
-    keys: [keys.COOKIE_KEY],
-    maxAge: 24 * 60 * 60 * 100,
-  }),
-);
-app.use(cookieParser());
+app.set('trust proxy', 1); // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  cookie:
+  {
+    // EXPLANATION: Did not buy a domain name,
+    // so must allow cross-site cookies for Vercel frontend/AWS backedn
+    sameSite: process.env.NODE_ENV === 'development' ? 'lax' : 'none',
+    secure: process.env.NODE_ENV !== 'development',
+    maxAge: 60000,
+  },
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use('/auth', authRoutes);
 
-// TODO: async... probably should await. Just waiting a little while to call for a task instead
+// TODO: rplace this with getting tasks from S3. Also need this async
 createExampleTasks();
 
 const authCheck = (req: Request, res: Response, next: NextFunction) => {
@@ -88,12 +87,7 @@ app.get('/restricted', authCheck, (req, res) => {
 
 app.get('/', (req: Request, res: Response) => res.send('Test'));
 
-app.get('/createExampleTasks', async (req: Request, res: Response) => {
-  // Calling at server startup now
-  // createExampleTasks();
-  res.send(exampleTasks);
-});
-
+// NOTE: Call on startup to create a task based on xml. Will do this with admin portal in future
 app.get('/createExampleTable', async (req, res, next: NextFunction) => {
   try {
     await createTableFromXml('https://hacc-2020.s3-us-west-2.amazonaws.com/chineseArrivals_1847-1870-rtp.xml', 'chinese_arrivals');
@@ -132,12 +126,6 @@ app.get('/users', async (request, response) => {
     response.status(400).send('Something went wrong in /users route');
   }
 });
-
-// Listen both http & https ports
-// const httpsServer = https.createServer({
-//   key: fs.readFileSync('./certs/server-hacc-key.pem'),
-//   cert: fs.readFileSync('./certs/server-hacc-cert.pem'),
-// }, app);
 
 app.listen(process.env.HOST_PORT, () => {
   console.log(`⚡️[server]: Server is running at ${process.env.HOST}`);
