@@ -5,8 +5,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import 'reflect-metadata';
 import passport from 'passport';
-import https from 'https';
-import fs from 'fs';
+// import https from 'https';
+// import fs from 'fs';
 
 import './config/env-setup';
 import './config/passport-setup';
@@ -142,4 +142,5 @@ app.get('/users', async (request, response) => {
 app.listen(process.env.HOST_PORT, () => {
   console.log(`⚡️[server]: Server is running at ${process.env.HOST}:${process.env.HOST_PORT}`);
   console.log(`Google Auth Host/Port ${process.env.HOST}:${process.env.HOST_PORT}`);
+  console.log(`Environment is ${process.env.NODE_ENV}`);
 });

@@ -65,6 +65,8 @@ var cors_1 = __importDefault(require("cors"));
 var body_parser_1 = __importDefault(require("body-parser"));
 require("reflect-metadata");
 var passport_1 = __importDefault(require("passport"));
+// import https from 'https';
+// import fs from 'fs';
 require("./config/env-setup");
 require("./config/passport-setup");
 var cookie_session_1 = __importDefault(require("cookie-session"));
@@ -234,5 +236,6 @@ app.get('/users', function (request, response) { return __awaiter(void 0, void 0
 app.listen(process.env.HOST_PORT, function () {
     console.log("\u26A1\uFE0F[server]: Server is running at " + process.env.HOST + ":" + process.env.HOST_PORT);
     console.log("Google Auth Host/Port " + process.env.HOST + ":" + process.env.HOST_PORT);
+    console.log("Environment is " + process.env.NODE_ENV);
 });
 //# sourceMappingURL=index.js.map

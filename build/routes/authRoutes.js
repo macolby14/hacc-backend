@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var passport_1 = __importDefault(require("passport"));
 var router = express_1.default.Router();
-var CLIENT_HOME_PAGE_URL = process.env.CLIENT + ":" + process.env.CLIENT_PORT;
+var CLIENT_HOME_PAGE_URL = process.env.NODE_ENV === 'development' ? process.env.CLIENT + ":" + process.env.CLIENT_PORT : process.env.CLIENT;
 // when login is successful, retrieve user info
 router.get('/login/success', function (req, res) {
     if (req.user) {
