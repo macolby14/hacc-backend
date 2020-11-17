@@ -11,7 +11,7 @@ createConnection().then((connection) => {
 
   const GoogleStrategy = PassportGoogle.OAuth2Strategy;
 
-  const callbackURLDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : `${process.env.HOST}:${process.env.HOST_PORT}`;
+  // const callbackURLDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : `${process.env.HOST}:${process.env.HOST_PORT}`;
 
   passport.use(
     new GoogleStrategy(
@@ -19,7 +19,7 @@ createConnection().then((connection) => {
       // options for the twitter start
         clientID: keys.GOOGLE_CLIENT_ID,
         clientSecret: keys.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${callbackURLDomain}/auth/google/callback`,
+        callbackURL: '/auth/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         const currentUser = await userRepository.findOne({
