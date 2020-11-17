@@ -47,7 +47,7 @@ app.use(session({
   secret: 'keyboard cat',
   cookie:
   {
-    // EXPLANATION: Did not buy a domain name,
+    // EXPLAIN: Did not buy a domain name,
     // so must allow cross-site cookies for Vercel frontend/AWS backedn
     sameSite: process.env.NODE_ENV === 'development' ? 'lax' : 'none',
     secure: process.env.NODE_ENV !== 'development',
@@ -59,9 +59,10 @@ app.use(passport.session());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use('/auth', authRoutes);
 
-// TODO: rplace this with getting tasks from S3. Also need this async
+// TODO replace this with getting tasks from S3. Also need this async
 createExampleTasks();
 
+// EXPLAIN: Middleware for authorization on routes
 const authCheck = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
     res.status(401).json({
@@ -73,21 +74,9 @@ const authCheck = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// if it's already login, send the profile response,
-// otherwise, send a 401 response that the user is not authenticated
-// authCheck before navigating to home page
-app.get('/restricted', authCheck, (req, res) => {
-  res.status(200).json({
-    authenticated: true,
-    message: 'user successfully authenticated',
-    user: req.user,
-    cookies: req.cookies,
-  });
-});
-
 app.get('/', (req: Request, res: Response) => res.send('Test'));
 
-// NOTE: Call on startup to create a task based on xml. Will do this with admin portal in future
+// TODO Call on startup to create a task based on xml. Will do this with admin portal in future
 app.get('/createExampleTable', async (req, res, next: NextFunction) => {
   try {
     await createTableFromXml('https://hacc-2020.s3-us-west-2.amazonaws.com/chineseArrivals_1847-1870-rtp.xml', 'chinese_arrivals');
